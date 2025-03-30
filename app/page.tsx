@@ -4,12 +4,14 @@ import Sidebar from "./organisms/Sidebar";
 import ExpenseForm from "./molecules/ExpenseForm";
 import ExpenseList from "./organisms/ExpenseList";
 import PredictionChart from "./organisms/PredictionChart";
+import CategoryPieChart from "./organisms/CategoryPieChart.tsx";
 
 interface Expense {
   id: number;
   title: string;
   amount: number;
   date: string;
+  category: string;
 }
 
 const Home = () => {
@@ -26,6 +28,13 @@ const Home = () => {
         <h2 className="text-3xl font-semibold mb-4">Dashboard</h2>
         <ExpenseForm onAddExpense={handleAddExpense} />
         <ExpenseList expenses={expenses} />
+        
+        {/* Category Visualization */}
+        <h2 className="text-3xl font-semibold mt-6">Category Visualization</h2>
+        <CategoryPieChart expenses={expenses} />
+
+        {/* Expense Prediction Chart */}
+        <h2 className="text-3xl font-semibold mt-6">Expense Prediction</h2>
         <PredictionChart expenses={expenses} />
       </main>
     </div>

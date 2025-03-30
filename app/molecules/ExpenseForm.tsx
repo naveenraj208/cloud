@@ -2,13 +2,28 @@
 import React, { useState } from "react";
 
 interface ExpenseFormProps {
-  onAddExpense: (expense: { title: string; amount: number; date: string }) => void;
+  onAddExpense: (expense: { title: string; amount: number; date: string; category: string }) => void;
 }
+
+const categories = [
+  "Food",
+  "Transport",
+  "Shopping",
+  "Health",
+  "Entertainment",
+  "Bills",
+  "Education",
+  "Rent",
+  "Travel",
+  "Groceries",
+  "Other",
+];
 
 const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
+  const [category, setCategory] = useState(categories[0]); // Default category
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,11 +33,13 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
       title,
       amount: parseFloat(amount),
       date,
+      category,
     });
 
     setTitle("");
     setAmount("");
     setDate("");
+    setCategory(categories[0]); // Reset category
   };
 
   return (
@@ -30,6 +47,15 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
       <input type="text" placeholder="Expense Title" value={title} onChange={(e) => setTitle(e.target.value)} className="border p-2 w-full mb-2" />
       <input type="number" placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)} className="border p-2 w-full mb-2" />
       <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="border p-2 w-full mb-2" />
+      
+      <select value={category} onChange={(e) => setCategory(e.target.value)} className="border p-2 w-full mb-2">
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
+        ))}
+      </select>
+
       <button type="submit" className="bg-blue-600 text-white p-2 w-full rounded">Add Expense</button>
     </form>
   );
